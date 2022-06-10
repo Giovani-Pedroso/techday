@@ -1,0 +1,29 @@
+#+Title:TechDay DIO.me
+
+
+
+Develop a projec using the api offered by  the carrefour
+
++ Codigo arganizado
+
+* First API
+
+#+begin_src shell
+  GET
+  https://mercado.carrefour.com.br/api/checkout/pub/regions?country=BRA&postalCode={cep}
+#+end_src
+
+This api take 2 arguments the country(BRA) and the postalCode here we will only use the postal code, the api return the closests stores
+in the reagion this will be usefull went use the second Api
+
+* Second Api
+
+#+begin_src shell
+  GET https://mercado.carrefour.com.br/api/catalog_system/pub/products/search?fq={seller_name}
+#+end_src
+
+The second Api only has 1 argument that is the name/id of the store(this is what is return in the first API) then return the list on the products
+
+* What I am using and why
+
+The first thing I'm using is the NextJs the "full stack framework for react aplications", this was choosen because ...., from build the face of the application I'm using the Tailwind 
