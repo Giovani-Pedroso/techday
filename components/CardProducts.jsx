@@ -90,24 +90,24 @@ const InputQuantity = ({quantity, image,setQuantidate, productName, price}) =>{
     const {handleItem} = useContext(CartContext);    
     
     return(
-        <div className="flex flex-rol justify-between">
-          <a className="bg-blue-700 cursor-pointer w-[50px] text-4xl item-center text-center text-white h-[50px]"
+        <div className="flex flex-rol border-2 border-blue-700 justify-between">
+          <button className="bg-blue-700 cursor-pointer w-[50px] text-4xl item-center text-center text-white h-[50px]"
              onClick={()=>{
                  setQuantidate(quantity - 1);
                  handleItem({productName, image, quantity:quantity-1 ,price});
              }}>
             -
-          </a>
+          </button>
           <p className="align-middle inline-block text-xl p-2">
             {quantity}
         </p>
-          <a className="bg-blue-700 cursor-pointer w-[50px] text-4xl item-center text-center text-white h-[50px]"
+          <button className="bg-blue-700 cursor-pointer w-[50px] text-4xl item-center text-center text-white h-[50px]"
              onClick={()=>{
                  setQuantidate(quantity +1);
                  handleItem({productName,image, quantity:quantity+1 ,price});
              }}>
             +
-          </a>
+          </button>
         </div>
     );
 };

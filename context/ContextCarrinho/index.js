@@ -18,14 +18,16 @@ export const CartProvider = ({children}) =>{
             console.log("filtor retornando valor falso");
             return false;
         });
-
         newCart.push(newItem);
-        setCarItems(newCart);
+
+        //arange the items  in alphabetic order
+        const shortCart = newCart.sort((a,b)=>{
+            if(a.productName> b.productName)return 1;
+            else if(a.productName> b.productName)return -1;
+            return 0;
+        });
         
-        //setCarItems({...cartItems, ...item});
-        console.log(cartItems);
-        //console.log("funcionou");
-        //console.log("isso é um item: ", item);
+        setCarItems(shortCart);
     };
     
     return(

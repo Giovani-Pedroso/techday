@@ -1,14 +1,8 @@
 import {useState} from 'react';
 
-//components Imports
-import SearchBar from '../components/SearchBar.jsx';
-import Logo from '../components/Logo.jsx';
+//import of components
 import ModalStore from '../components/ModalStore.jsx';
 import SearchProducts from '../components/SearchProducts.jsx';
-import Aviso from '../components/Aviso.jsx';
-
-//test component
-//import Modal from '../components/Modal.jsx';
 
 export default function Home() {
 
@@ -16,10 +10,14 @@ export default function Home() {
     const [storeId, setStoreId] = useState("");
   return (
     <div className="flex flex-col items-center justify-center ">
-      
+
+
+      {/*component that is responsible for displaying products as well as searching for a specific product*/}
       <SearchProducts
         openModal={()=>setOpenModal(true)}
         store={storeId}/>
+
+      {/*this component will ask for a CEP (Brazilian postal code) and will show the nearby stores,*/}
       <ModalStore open={openModal}
                   onClose={()=>setOpenModal(false)}
                   onStore={setStoreId}/>

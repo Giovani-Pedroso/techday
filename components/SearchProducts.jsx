@@ -3,12 +3,16 @@ import Link from 'next/link';
 
 import {AiOutlineSearch,
         AiOutlineClose,
-        AiOutlineShoppingCart} from 'react-icons/ai';
+        AiOutlineShoppingCart,
+        AiOutlineClockCircle} from 'react-icons/ai';
 
 //component
 import CardProducts from './CardProducts.jsx';
 import Logo from './Logo.jsx';
-//
+
+
+//api that will return a list on products on a store
+//put the store id in the end on the string, this id is given be the api in the ModalStore component
 const apiGetProduct = "https://mercado.carrefour.com.br/api/catalog_system/pub/products/search?fq=";
 
 export default function SearchProducts({store, openModal}){
@@ -16,7 +20,6 @@ export default function SearchProducts({store, openModal}){
     const [productList, setProductsList] = useState([]);
     const [productSearch, setProductSearch] = useState("");
     const [inputValue, setInputValue] = useState("");
-    //const [componentes] 
     
     useEffect(()=>{
         const getProducts = async ()=>{
@@ -32,27 +35,33 @@ export default function SearchProducts({store, openModal}){
 
     },[]);
 
-    useEffect(()=>{
-        
-        
-    },[]);
 
     const handleSubmit = (e) =>{
         setProductSearch(inputValue.toLowerCase());
         e.preventDefault();
     };
+
+    
     
     return(
         <div className="flex flex-wrap w-[100%] justify-center ">
-          <nav className="flex mb-[20px] w-[100vw] drop-shadow-2xl flex-col items-center justify-center  bg-blue-700 text-white w-full">
-            <div className="flex justify-end mt-[10px] pr-3">
-              <Link href="./cart" >
-                <a className="text-3xl text-end">
-                  
-                  <AiOutlineShoppingCart/>
-                </a>
-              </Link>
-
+          <nav className="flex pt-[20px] sticky top-0 left-0 w-[100vw] drop-shadow-2xl flex-col items-center justify-center  bg-blue-700 text-white w-full md:static">
+            
+            <div className="flex w-full justify-between  mt-[0px] pr-3">
+              <div className="ml-[20px]">
+                <Link href="./cart" >
+                  <a className="text-3xl ">                  
+                    <AiOutlineClockCircle/>
+                  </a>
+                </Link>
+              </div>
+              <div className="mr-[10px]">
+                <Link href="./cart" >
+                  <a className="text-3xl ">                  
+                <AiOutlineShoppingCart/>
+                  </a>
+                </Link>
+              </div>
           
             </div>
             <Logo/>

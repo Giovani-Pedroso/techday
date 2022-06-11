@@ -32,6 +32,8 @@ export default function SearchBar(){
     const [cep, setCep] = useState('');
     const [products, setProducts] = useState([]);
 
+    const [style, setStyle] = useState({});
+    
     /*
     //get the stores id
     useEffect(()=>{    
@@ -72,6 +74,9 @@ export default function SearchBar(){
 
         
     },[]);
+
+
+
 
     
     return(
