@@ -6,9 +6,13 @@ import {AiOutlineSearch} from 'react-icons/ai';
 //import of the components
 import CardStore from './CardStore.jsx';
 
+//api end point que retorna uma lista de lojas do Carrefour nas proximidades
+//!!! Atenção !!! essa api pode não funcionar no futuro 
+//coloque o CEP no final do endereço
+//-------------------------------------------------
 //api end point that will return a list of close Carrefour stores
 //!!! Atention this api maybe not will not work in the future !!!
-//place the CEP(brazilian postal code) afther the dress
+//place the CEP(brazilian postal code) afther the adress
 const apiGetStores = "https://mercado.carrefour.com.br/api/checkout/pub/regions?country=BRA&postalCode=";
 
 export default function Modal({storeId, onStore}){
@@ -18,10 +22,15 @@ export default function Modal({storeId, onStore}){
     const [storeList, setStoreList] = useState([]);
     const [search, setSearch] = useState(0);
 
+    //Estado que controla a mensagem de carregamento
+    //------------------------------------------
     //This state control the Loading message
     const [loading, setLoading] = useState(false);
 
     useEffect(()=>{
+
+        //função que vai chamar a api e converter seu retorno em um objeto json
+        //-------------------------------------------------
         //function that will call the api and convert in a json object
         const getProducts = async () =>{
             try{
@@ -30,6 +39,8 @@ export default function Modal({storeId, onStore}){
                 const json = await stores.json();
                 setStoreList(json[0].sellers);
 
+                //Esconde a menssagem de carregamento
+                //------------------------------------
                 //hide the loading message
                 setLoading(false);
             }
@@ -40,32 +51,49 @@ export default function Modal({storeId, onStore}){
                 alert(`ocoreu um erro ao requisitar o cep`);
             };
         };
+        //Evita chamar a api com um CEP vazio
+        //-----------------------------------
         //this line avoid calling the api with an empty CEP code
         if(search>1)getProducts();        
     },[search]);
     
     const handleSubmit = (e) =>{
-        //If the state was set only once the  
+        //Se o estado for chamado apenas uma vez a função não funciona
+        //------------------------------ 
+        //If the state was set only once the function
+        //does not work
         setSearch(value=> value+=1);
         setSearch(value=> value+=1);
 
+        //Mostra a mensagem de carregamento
+        //-------------------------------------
         //showw a loading message
         setLoading(true);
 
+        //impede que a página seja recarregada 
+        //quando o formulário é enviado
+        //---------------------
         //prevent the page to reload whent the form is submited
         e.preventDefault();
     };
 
+    //Salve o id no context, esta ação fechará
+    //o modal
+    //--------------------------------
     //Save the id in the context, this action will close
     //the modal 
     const handleStore = (id)=>{
         onStore(id);
     };
     
-    //if the storeId(variable of the contex) in empty
+    //Se o storeId(variavel do contexto) não for uma string
+    //o modal e fechado
+    //------------------------------------
+    //if the storeId(variable of the contex) is not empty
     //the modal is closed
     if(storeId !="")  return null;
 
+    //O modal
     //the modal itself
     return(
         <div
@@ -76,6 +104,7 @@ export default function Modal({storeId, onStore}){
                 Encontre uma loja nas proximidades
             </h1>
 
+            {/*Barra de pesquisa*/}
             {/*The search bar*/}
             <form
               onSubmit={handleSubmit}
@@ -89,14 +118,19 @@ export default function Modal({storeId, onStore}){
             </button>
             </form>
 
+            {/*Mensagem de carregamento*/}
             {/*The message of loading*/}
             {loading &&
                 <h1 className="text-xl">Carregando Lojas...</h1>
             }
 
+            {/*Mostar os Cartões da loja*/}
             {/*Show the cards of the stores*/}
             <div className="flex flex-col overflow-y-auto">
             {
+
+            //renderiza a lista de lojas
+            //-----------------------
             //render the store list
                 storeList.map((store)=>{
                     return(

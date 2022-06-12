@@ -1,37 +1,11 @@
 import {useState, useContext} from 'react';
 
-//import of the context
 import {CartContext} from '../context/ContextCarrinho/index.js';
-
-
-//import Aviso from './Aviso.jsx';
 
 export default function CardProducts({price, product, image}){
 
-    const [openAviso, setOpenAviso] = useState(false);
-    const [quantidade, setQuantidate] = useState(0);
-    const [messageAviso, setMessageAviso] = useState("");
+    const [quantity, setQuantity] = useState(0);
 
-    const {cartItems, setCarItems} = useContext(CartContext);
-    /*
-    const handleSubmit = (e) =>{
-
-        e.preventDefault();
-        
-        if(quantidade > 0) setMessageAviso(`${quantidade} de ${product} foi adicionado(a) ao carinho`);
-        if(quantidade == 0) setMessageAviso(`o produto ${product} foi removido`);
-        else setMessageAviso("Valor invalido");
-            
-        setOpenAviso(true);
-        console.log("aviso"); 
-
-        
-    };
-    const getAviso = () =>{
-        if(aviso>0) return  <Aviso text="ola"/>; 
-        return 0;
-    };
-   */ 
     return(
         <div className=" flex flex-col h-full rounded-sm p-2 justify-between border-[2px] border-[#ddd] ">
 
@@ -42,21 +16,25 @@ export default function CardProducts({price, product, image}){
           <div>
           <p className="text-blue-700 p-1 font-bold mb-[10px]">R${price}</p>
           <div className="flex flex-col w-full" >
-            {/*       <input className="border-2 p-2 focus:outline-none border-blue-700 w-full"
-                   value={quantidade}
-                   onChange={e=>setQuantidate(e.target.value)}
-                   placeholder="quantidade"
-                   type="number"/>
-             */}
-            {quantidade == 0 ? <ButtonAddCart productName={product}
+
+            {/*
+              se a quantidade de produtos for zero mostrará um botão perguntando
+              para adicionar o produto no carrinho, se não vai mostrar a entrada onde
+              o usuário pode selecionar quantos produtos deseja
+              -----------------------------------------------------------
+              if the amount of products is zero, it will show a button asking
+              to add the product to the cart, otherwise it will show the entry where
+              the user can select how many products them wants
+            */}
+            {quantity == 0 ? <ButtonAddCart productName={product}
                                               price={price}
                                               image={image}
-                                              on={()=>setQuantidate(1)}/> :
-             <InputQuantity setQuantidate={setQuantidate}
+                                              on={()=>setQuantity(1)}/> :
+             <InputQuantity setQuantidate={setQuantity}
                             productName={product}
                             image={image}
                             price={price}
-                            quantity={quantidade}/>
+                            quantity={quantity}/>
             }
             
           </div>
@@ -67,9 +45,13 @@ export default function CardProducts({price, product, image}){
 
 const ButtonAddCart = ({on, productName, image, price})=>{
 
-    const {handleItem} = useContext(CartContext);    
+    const {handleItem} = useContext(CartContext); 
+
     return(
         <button type="button" onClick={()=>{
+          //salva o produto no contexto
+          //------------------------------
+          //save the product in the context
             handleItem({productName,image, quantity:1 ,price});
             on();
 
@@ -86,6 +68,11 @@ const InputQuantity = ({quantity, image,setQuantidate, productName, price}) =>{
         <div className="flex flex-rol border-2 border-blue-700 justify-between">
           <button className="bg-blue-700 cursor-pointer w-[50px] text-4xl item-center text-center text-white h-[50px]"
              onClick={()=>{
+                //salva o produto no contexto, mas se a quantidade for zero 
+                //não fará nada
+                //------------------------------
+                //save the product in the context, but if the quantity were
+                //it won't do nothing
                  setQuantidate(quantity - 1);
                  handleItem({productName, image, quantity:quantity-1 ,price});
              }}>
@@ -105,5 +92,3 @@ const InputQuantity = ({quantity, image,setQuantidate, productName, price}) =>{
     );
 };
 
-//
-//          <img src="https://carrefourbr.vteximg.com.br/arquivos/ids/14648737/batata-monalisa-carrefour-600-g-1.jpg?v=637511892564730000"/>

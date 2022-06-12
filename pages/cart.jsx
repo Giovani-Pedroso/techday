@@ -1,28 +1,24 @@
-import {useEffect, useState, useContext} from 'react';
+import {useContext} from 'react';
 
-import Link from 'next/link';
-
-import {AiOutlineWhatsApp,
+import {
         AiOutlineSave,
         AiOutlineCopy,
-        AiOutlineArrowLeft} from 'react-icons/ai';
+    } from 'react-icons/ai';
 
 import {CartContext} from '../context/ContextCarrinho/index.js';
 
-import Logo from '../components/Logo.jsx';
 import Navbar from '../components/Navbar1.jsx';
 import CardProductsCart from '../components/CardProductCart.jsx';
-//const itensTest = { "Óleo de Soja Liza 900ml": 3, "Extrato de Tomate Pomarola 320 g": 3 };
 
 export default function Cart(){
 
     const {cartItems } = useContext(CartContext);
-    const [itemsValue, setItemsValue] = useState({});
-    const [messageWhatsapp, setMessageWhatsapp] = useState();
 
+    //função que retorna a soma de todos os preços
+    //---------------------------------------
+    //function that return the sum of all prices
     const getTotal =()=>{
         const total=0;
-
         cartItems.map(item=>{
             total+= item.price * item.quantity;
            
@@ -33,24 +29,46 @@ export default function Cart(){
     const saveCart = () =>{
         const total = getTotal();
         
+        //se não houver itens não fara nada
+        //-----------------------------------
+        //if there is no item won't do nothing
         if(total==0){
             alert("não há items para salvar");
             return 0;
         }
+
+        //pega os dados que foram salvos e os coloca em 
+        //uma variavel
+        //------------------------------------------
+        //take the data that was stored then put them into a variable
         const storedData = JSON.parse(localStorage.getItem("historic"));
+
+        //salva a data atual
+        //------------------
+        //save the actual date
         const date = new Date(Date.now());
         let dataToSave;
+
+        //junta os dois dados
+        //--------------------
+        //join the 2 datas
         const newData = {date, items:cartItems, totalPrice:total};
    
+        //converte os datos para serem salvos
+        //---------------------------------
+        //convert the data to but save
         if(storedData==null) dataToSave = JSON.stringify([newData]);
         else {
             storedData.push(newData);
             dataToSave = JSON.stringify(storedData);
         }
-        //console.log(JSON.parse(dataToSave));
+        
+        //salva os dados no armazenamento local
+        //-----------------------------
+        //save the data in the local storage
         localStorage.setItem("historic", dataToSave);
 
-        
+        //the list was saved - pr-br
         alert("a list foi salva");
         return 0;
     };
@@ -59,20 +77,29 @@ export default function Cart(){
         
         const total = getTotal();
         if(total==0){
+            //there is nothing to copy - pt-br
             alert("nao há items para copiar");
             return 0;
         }
         let message ="";
-        cartItems.map(item=> message+=`${item.productName} X ${item.quantity}\n`);
+
+        //adiciona os itens do carrinho na menssagem
+        //----------------------------------------
+        //add the cart items in the message
+        cartItems.map(item=> message +=`${item.productName} X ${item.quantity}\n`);
         message +=`\nTotal: R$ ${total}`;
-        console.log(message);
+        //console.log(message);
+
+        //coloca a menssagem co Ctrl-v
+        //-----------------------------
+        //put the message in the Ctrl-v
         navigator.clipboard.writeText(message);
+
+        //the list was cpoy to the clipboard - pt-br
         alert("Lista copiada para a area de transferencia");
         return 0;
     };
     
-    //console.log("itesn do carrinho", cartItems);
-    //console.log(obj2Array(itensTest));
     return (
         <div className="flex flex-col m-0 p-0">
 
@@ -80,7 +107,11 @@ export default function Cart(){
           <Navbar isCart={true}/>
           <div className="h-full mb-[108px]">
             {
-              
+              /*
+                renderiza os itens do carrinho
+                ------------------------------
+                render the cart's itens
+            */
                 cartItems.map(item=>{
                     if(item.quantity){
                         //console.log(messageTpm);
@@ -98,7 +129,7 @@ export default function Cart(){
             }
           </div>
           
-          <footer className="flex flex-col w-[100vw] fixed inset-x-0 bottom-0 bg-blue-700 text-white p-[6px]">
+          <footer className="flex flex-col w-[100vw] fixed inset-x-0 bottom-0 bg-blue-700 text-white py-[6px] px-[26px]">
             <div className="flex flex-rol justify-between">
               <p>
                 Total: 
@@ -125,13 +156,4 @@ export default function Cart(){
     );
 }
 
-/*
-Açúcar Refinado União 1Kg X 3
-Batata Monalisa Aprox. 1 Kg X 3
-Molho de Tomate Tradicional Tarantella Sachê 300 g X 6
-Óleo de Soja Liza 900ml X 3
-
-Total: R$ 70.95
-
- */
 

@@ -2,23 +2,23 @@ import {useState, useContext} from 'react';
 
 import {CartContext} from '../context/ContextCarrinho/index.js';
 
-import place from '../public/placeHolder.png';
-
 export default function CardProductsCart({image, productName, price, quantity}){
 
     const [totalPrice, setTotalPrice] = useState((price*quantity).toFixed(2));  
-    const [quantidade, setQuantidate] = useState(quantity);
 
     const {handleItem} = useContext(CartContext);
+
+    //orgniza as variaveis
+    //--------------------
+    //organize the variables
     const item = {image, productName, quantity, price};
 
-
-    
     const handleQuantity = (qtn) =>{
-        setQuantidate(qtn);
+        //setQuantidate(qtn);
+        item.quantity=qtn;
         setTotalPrice((qtn*price).toFixed(2));
-
     };
+
     
     return(
         <div className="w-full flex flex-col border-b-2 px-[20px]">
@@ -50,14 +50,19 @@ export default function CardProductsCart({image, productName, price, quantity}){
 
 
 
-const InputQuantity = ({item, onQuantity, setQuantidate, setCarItems, productName, price}) =>{
+const InputQuantity = ({item, onQuantity, setQuantidate}) =>{
    
     return(
         <div className="flex flex-rol w-[30%] justify-between border-2 border-blue-700">
           <button className=" flex bg-blue-700 cursor-pointer w-[30px] text-2xl item-center justify-center text-white h-[30px]"
              onClick={()=>{
+                //salva o produto no contexto, mas se a quantidade for zero 
+                //não fará nada
+                //------------------------------
+                //save the product in the context, but if the quantity were
+                //0 it won't do nothing
                  if(item.quantity>0){
-                     setQuantidate(item.quantity-1);
+                     setQuantidate(item.quantity);
                      onQuantity({...item, quantity:item.quantity-1});
                  };
              }}
@@ -70,8 +75,13 @@ const InputQuantity = ({item, onQuantity, setQuantidate, setCarItems, productNam
           <button className="bg-blue-700 cursor-pointer w-[30px] text-2xl item-center text-center text-white h-[30px] "
              onClick={()=>{
                  if(item.quantity<99){
+                //salva o produto no contexto, mas se a quantidade for 99 
+                //não fará nada
+                //------------------------------
+                //save the product in the context, but if the quantity were
+                //99 it won't do nothing
                      setQuantidate(item.quantity+1);
-                     onQuantity({...item, quantity:item.quantity+1});
+                     onQuantity({...item, quantity:item.quantity});
                  };
              }}
             >

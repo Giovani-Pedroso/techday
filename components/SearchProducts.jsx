@@ -1,5 +1,7 @@
 import {useEffect, useState} from 'react';
 
+//Uma versão da tag a optimizada para o  nextJs
+//------------------------------------------
 //a version of the "a tag" optimized for nextJs
 import Link from 'next/link';
 
@@ -12,6 +14,11 @@ import {AiOutlineSearch,
 import CardProducts from './CardProducts.jsx';
 import Logo from './Logo.jsx';
 
+
+//Essa api retorna a lista de produtos disponíveis em uma loja,
+//coloque o id da loja no final da api esse id é obtido pela api do componente 
+//"modalStore" 
+//-------------------------------------------
 //api that will return a list on products on a store
 //put the store id in the end on the api, this id is given be the api in the ModalStore component
 const apiGetProduct = "https://mercado.carrefour.com.br/api/catalog_system/pub/products/search?fq=";
@@ -23,11 +30,15 @@ export default function SearchProducts({store, openModal}){
     const [productSearch, setProductSearch] = useState("");
     const [inputValue, setInputValue] = useState("");
     
+    //Esse estado controla a mensagem de carregamento
+    //----------------------------
     //This state control the Loading message
     const [loading, setLoading] = useState(true);
     
     useEffect(()=>{
 
+        //função que vai chamar a api e converter seu retorno em um objeto json
+        //----------------------------------------------------
         //function that will call the api and convert in a json object
         const getProducts = async ()=>{
             try{
@@ -35,6 +46,8 @@ export default function SearchProducts({store, openModal}){
                 const jsonProduct = await product.json();
                 setProductsList(jsonProduct);
 
+                //Esconde a mensagem de carregamento
+                //---------------------------
                 //hide the loading message
                 setLoading(false);
             }
@@ -42,35 +55,75 @@ export default function SearchProducts({store, openModal}){
 
         };
 
+
+        //Evita chamar a api com um id vazio
+        //-----------------------------------
         //this line avoid calling the api with an empty Id store
         if(store) getProducts();
     },[store]);
 
+    //Função que cuida da busca por produtos
+    //-------------------------------
     //Function that handle the search, the search method will be explain
     //in the below
     const handleSubmit = (e) =>{
         setProductSearch(inputValue.toLowerCase());
+
+        //impede que a página seja recarregada 
+        //quando o formulário é enviado
+        //-----------------------------------
         //prevent the page to reload whent the form is submited
         e.preventDefault();
     };
 
+    //função que mostra os produtos na tela
+    //-----------------------------------------
+    //function to show the products in the window
     const getProducts =() =>{
 
+      //Expreção regular usada na busca dos produtos
+      //--------------------------------------
+      //this regular expresion will be use 
+      //to search for products
+      const re = new RegExp(`${productSearch}`);
+      
+      //first run for all items 
       return  productList.map(product=>{
-               const nameLowerCase = product.productName.toLowerCase();
-                  const re = new RegExp(`${productSearch}`);
+
+              //faz as letras ficarem minusculas
+              // isso melhora a experiencia do
+              //usuario
+              //-----------------------------------
+              //make all letter lower case
+              //this imporve the user expirience 
+              const nameLowerCase = product.productName.toLowerCase();
                   
+                  // ele irá verificar se o producSearch está vazio significando
+                  //que nada foi pesquisado ou se o nome tem a regex
+                  //---------------------------  
+                  //it will check if the producSearch is empty meaning 
+                  //that nothing was search or if the name have the regex
                   if((productSearch =="") ||(nameLowerCase.search(re)!=-1) ){
                       return(
                           <div key={product.productName} className="w-[50%] h-[420px] sm:w-[33%] md:w-[20%] md:m-[20px]">
                             <CardProducts product={product.productName}
-                                      
                                       image={product.items[0].images[0].imageUrl}
                                       price={product.items[0].sellers[0].commertialOffer.Installments[0].Value}
                         />
                       </div>
                       );
                   }
+                  
+                  //se falhar na verificação  também devolverá o produto
+                  //mas com a propriedade hidden, foi feito assim
+                  //pois se o componente não for devolvido ele perde seu
+                  //estado causando o inconveniente de perder os produtos 
+                  //selecionados após uma pesquisa
+                  //-----------------------------------------------------------
+                  //if verification fails, the product will also be returned
+                  //but with the property hidden, it was done like this
+                  //because if the component is not returned, it loses its
+                  //state causing the inconvenience of losing the selected products after a search
                   return(
                       <div key={product.productName} className="hidden">
                         <CardProducts product={product.productName}
@@ -120,8 +173,12 @@ export default function SearchProducts({store, openModal}){
             </button>
             </form>
             
-            {/*This button will clear the store Id, this action
-              will open the modal for search for a new store
+            {/*
+            Essa botão fará com que o storeId se torne uma string
+            vazio fazendo com que o modal apareça
+            //--------------------------------------------
+            This button will clear the store Id, this action
+            will open the modal for search for a new store
             */}
             <div className="mb-4">
               Loja {store} <button
@@ -135,35 +192,9 @@ export default function SearchProducts({store, openModal}){
           {(loading && (store!="")) &&
                 <h1 className="text-xl">Carregando Produtos...</h1>
           }
-          {
-              getProducts()
-              /*
-              productList.map(product=>{
-                  const nameLowerCase = product.productName.toLowerCase();
-                  const re = new RegExp(`${productSearch}`);
-                  
-                  if((productSearch =="") ||(nameLowerCase.search(re)!=-1) ){
-                      return(
-                          <div key={product.productName} className="w-[50%] h-[420px] sm:w-[33%] md:w-[20%] md:m-[20px]">
-                            <CardProducts product={product.productName}
-                                      
-                                      image={product.items[0].images[0].imageUrl}
-                                      price={product.items[0].sellers[0].commertialOffer.Installments[0].Value}
-                        />
-                      </div>
-                      );
-                  }
-                  return(
-                      <div key={product.productName} className="hidden">
-                        <CardProducts product={product.productName}
-                                      image={product.items[0].images[0].imageUrl}
-                                      price={product.items[0].sellers[0].commertialOffer.Installments[0].Value}
-                        />
-                      </div>
-                  );
-              })
-              */
-          }
+
+          {/*return the products*/}
+          {getProducts()}
 
           
         </div>

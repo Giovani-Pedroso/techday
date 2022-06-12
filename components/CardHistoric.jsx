@@ -10,31 +10,27 @@ import {AiOutlineShoppingCart,
 
 export default function CardHistoric({deleteHistoric, date, items, total}){
 
-
     const [show, setShow] = useState(false);
     const {handleItems} = useContext(CartContext); 
 
-    const context = useContext(CartContext);
     const newDate = new Date(date);
     const dateOfSave = ` ${newDate.getDate()}/${newDate.getMonth()+1}/${newDate.getFullYear()} `;
 
     const handleCart = ()=>{
-        console.log("carrilho");
-        console.log("items carrilho", items);
-        console.log(context);
-        handleItems(items);
-        Router.push('./cart');
-        
+      //salva os itens do historico no context
+      //e vai para apagina do carrinho
+      //----------------------------------
+      //save history items in context and go to cart page
+      handleItems(items);
+      Router.push('./cart');
     };
 
-    const handleDelete = ()=>{
-        console.log("delete");
-    };
+    //mostra os produtos que foram salvos no carrinho
+    //----------------------------------------
+    //shows the products that have been saved in the cart
 
     const showProducts = () =>{
-
         setShow(!show);
-        console.log("oi");
     };
     
     return(
@@ -67,7 +63,11 @@ export default function CardHistoric({deleteHistoric, date, items, total}){
             </button>
           </div>
         </div>
-        { show &&
+        { 
+          //renderiza od produtos do carrinho
+          //-----------------------
+          //render the cart products
+        show &&
           <div>
             {items.map(item=>{
                 return(
