@@ -22,7 +22,8 @@ export default function SearchProducts({store, openModal}){
     const [productList, setProductsList] = useState([]);
     const [productSearch, setProductSearch] = useState("");
     const [inputValue, setInputValue] = useState("");
-
+    const [loading, setLoading] = useState(true);
+    
     console.log("store in the search", store);
     
     useEffect(()=>{
@@ -32,11 +33,17 @@ export default function SearchProducts({store, openModal}){
                 const product = await fetch(`${apiGetProduct}${store}`);
                 const jsonProduct = await product.json();
                 setProductsList(jsonProduct);
+                setLoading(false);
             }
             catch(err){console.log(err.message);};
 
         };
-        if(store)getProducts();
+        if(store){
+            getProducts();
+
+        };
+        
+    
 
     },[store]);
 
@@ -86,6 +93,9 @@ export default function SearchProducts({store, openModal}){
                              onClick={openModal}> Mude de loja</button>
             </div>
           </nav>
+          {(loading && (store!="")) &&
+                <h1 className="text-xl">Carregando Produtos...</h1>
+          }
           {
 
           
@@ -95,9 +105,9 @@ export default function SearchProducts({store, openModal}){
                   
                   if((productSearch =="") ||(nameLowerCase.search(re)!=-1) ){
                       return(
-                          <div className="w-[50%] h-[400px] sm:w-[33%] md:w-[20%] md:m-[20px]">
-                        <CardProducts product={product.productName}
-                                      key={product.productName}
+                          <div key={product.productName} className="w-[50%] h-[420px] sm:w-[33%] md:w-[20%] md:m-[20px]">
+                            <CardProducts product={product.productName}
+                                      
                                       image={product.items[0].images[0].imageUrl}
                                       price={product.items[0].sellers[0].commertialOffer.Installments[0].Value}
                         />
@@ -105,9 +115,8 @@ export default function SearchProducts({store, openModal}){
                       );
                   }
                   return(
-                      <div className="hidden">
+                      <div key={product.productName} className="hidden">
                         <CardProducts product={product.productName}
-                                      key={product.productName}
                                       image={product.items[0].images[0].imageUrl}
                                       price={product.items[0].sellers[0].commertialOffer.Installments[0].Value}
                         />

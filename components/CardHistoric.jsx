@@ -71,7 +71,7 @@ export default function CardHistoric({deleteHistoric, date, items, total}){
           <div>
             {items.map(item=>{
                 return(
-                    <div className=" flex justify-between border-t-2 border-dashed p-4">
+                    <div key={item.productName} className=" flex justify-between border-t-2 border-dashed p-4">
                       <div >{item.productName}</div>
                       <div>
                         <div className="text-blue-700">Qtn:{item.quantity}</div>

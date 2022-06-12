@@ -19,7 +19,7 @@ A primeira é responsavel por procurar lojas nas proximidades tendo como argumen
 A segundo retornas os itens dispoviveis em uma loja tendo como argumento o id da loja dejada, tal id pode ser obtido ultilizando a api anterior, apenas um detalhe a para caso você venha notar alguns bugs a api ira retornar uma lista independentemento do valor para o id colocado funcionando mesmo com um valor vazio, abaixo a api, foi ultilizado XXXXXXXXXXXX para representar o id:
 
 #+begin_src js
-https://mercado.carrefour.com.br/api/catalog_system/pub/products/search?fq= XXXXXXXXXXXX
+https://mercado.carrefour.com.br/api/catalog_system/pub/products/search?fq=XXXXXXXXXXXX
 #+end_src
 
 ** Introudução

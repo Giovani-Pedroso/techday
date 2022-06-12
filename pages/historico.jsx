@@ -31,12 +31,13 @@ export default function Historico (){
         <div>
           <Navbar/>
           {/*I use flex-reverse because the first item to appear was the oldest one*/}
-          <div className="flex flex-col-reverse ml-[10px]">
+          <div className="flex flex-col-reverse ml-[10px] ">
           {
               historicList.map((item, index)=>{
                   console.log(item);
                   return(
                       <CardHistoric date={item.date}
+                                    key={item.date}
                                     deleteHistoric={()=>removeItem(index)}
                                     items={item.items}
                                     total={item.totalPrice}
