@@ -1,29 +1,59 @@
-#+Title:TechDay DIO.me
+* Sumario/Sumary
 
++ [[PT-BR]]
+  + [[Index]]
+  + 
+  + 
++ [[ENG]]
+  + 
 
+* PT-BR
 
-Develop a projec using the api offered by  the carrefour
+Techday foi um concurso realizado pela plataforma educadional [[https://www.dio.me/][dio.me]] em parceria com o Carrefour com o objetivo de recrutar novos  funcionarios. Esse repositorio foi feito para a minha partipação nesse concruso. o objetivo foi criar um site usando duas api fornecidas pelos realizadores do concurso. ATENÇÃO dependendo data que você estiver olhando as apis podem derem sidos desativadas.
 
-+ Codigo arganizado
+A primeira é responsavel por procurar lojas nas proximidades tendo como argumento um CEP aqui representado por 00000000:
 
-* First API
-
-#+begin_src shell
-  GET
-  https://mercado.carrefour.com.br/api/checkout/pub/regions?country=BRA&postalCode={cep}
+#+begin_src js https://mercado.carrefour.com.br/api/checkout/pub/regions?country=BRA&postalCode=00000000
 #+end_src
 
-This api take 2 arguments the country(BRA) and the postalCode here we will only use the postal code, the api return the closests stores
-in the reagion this will be usefull went use the second Api
+A segundo retornas os itens dispoviveis em uma loja tendo como argumento o id da loja dejada, tal id pode ser obtido ultilizando a api anterior, apenas um detalhe a para caso você venha notar alguns bugs a api ira retornar uma lista independentemento do valor para o id colocado funcionando mesmo com um valor vazio, abaixo a api, foi ultilizado XXXXXXXXXXXX para representar o id:
 
-* Second Api
-
-#+begin_src shell
-  GET https://mercado.carrefour.com.br/api/catalog_system/pub/products/search?fq={seller_name}
+#+begin_src js
+https://mercado.carrefour.com.br/api/catalog_system/pub/products/search?fq= XXXXXXXXXXXX
 #+end_src
 
-The second Api only has 1 argument that is the name/id of the store(this is what is return in the first API) then return the list on the products
+** Introudução
+Compras de mercado um momento de tensão no bolso para muitos de nos brasileiros algumas vezes principalmente quando você essa guardando as compras e nota que esqueceu de comprar a farinha do bolo de aniversario do seu irmão, falo por experiencia propria. Para eliminar essas complicações eu criei a aplicação web Carrefour checklist, uma ferramenta que premite a criação de listas de compras com preços atualizados, salvar essas listas para momentos futuros assim como compartilhá-la.
 
-* What I am using and why
+** Tecnologias usadas
 
-The first thing I'm using is the NextJs the "full stack framework for react aplications", this was choosen because ...., from build the face of the application I'm using the Tailwind 
+Para a criação dessa aplicação ultilizei principalmente 2 frameworks e uma biblioteca de icones chamada react-icons.
+
+*** nextJs
+
+O primeiro foi o nextJs o auto intitulado framework react para produção, ele foi selecionado por possuir todos os recursos do React com o diferencial de construir nativamente paginas optimizadas para SEO o que faz o site ser melhor rankiado pelos mecanismos de busca como Google, Bing e DuckDuckGo, aqui temos uma comparação entre os codigos gerados pelos frameworkes {mostra o slide} como pode ver o codigo do react possui poucas linhas diferentemento do site feito com o next essa diferença faz com que sites usando react sejam mais dificies de serem analizados pelos mecanismos de busca. 
+
+*** tailwind
+
+Para realizar a estilização do site ultilizei o frameworkTailind CSS um framework similar ao Boostrap porem focado em ultilidades ao inveis de componentes tronando-o muito mais flexivel.
+
+*** React icons
+
+Uma biblioteca que reune icones de diversos estilos
+
+** Estrutura do site
+
+O website possui foi construido usando 3 paginas 
+
+*** Index
+
+
+
+
+
+
+
+
+* ENG 
+
+

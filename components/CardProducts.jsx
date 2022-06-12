@@ -13,7 +13,7 @@ export default function CardProducts({price, product, image}){
     const [messageAviso, setMessageAviso] = useState("");
 
     const {cartItems, setCarItems} = useContext(CartContext);
-    
+    /*
     const handleSubmit = (e) =>{
 
         e.preventDefault();
@@ -31,17 +31,17 @@ export default function CardProducts({price, product, image}){
         if(aviso>0) return  <Aviso text="ola"/>; 
         return 0;
     };
-    
+   */ 
     return(
-        <div className=" flex flex-col rounded-sm p-2 justify-between border-[2px] border-[#ddd] w-[33%] md:w-[20%] md:m-[20px]">
+        <div className=" flex flex-col h-full rounded-sm p-2 justify-between border-[2px] border-[#ddd] ">
 
           <div>
-          <img src={image}/>
+          <img className="max-h-[175px]" src={image}/>
             <p className="mb-[20px]">{product}</p>
           </div>
           <div>
           <p className="text-blue-700 p-1 font-bold mb-[10px]">R${price}</p>
-          <form className="flex flex-col w-full" onSubmit={handleSubmit}>
+          <div className="flex flex-col w-full" >
             {/*       <input className="border-2 p-2 focus:outline-none border-blue-700 w-full"
                    value={quantidade}
                    onChange={e=>setQuantidate(e.target.value)}
@@ -59,15 +59,8 @@ export default function CardProducts({price, product, image}){
                             quantity={quantidade}/>
             }
             
-          </form>
           </div>
-        {/*
-          <Aviso open={openAviso}
-                 text={messageAviso}
-                 type="aviso"
-                 onClose={()=>setOpenAviso(false)}
-                 />
-         */}
+          </div>
         </div>
     );
 }

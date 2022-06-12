@@ -12,7 +12,7 @@ import CardStore from './CardStore.jsx';
 //place the CEP(brazilian postal code afther this end point)
 const apiGetStores = "https://mercado.carrefour.com.br/api/checkout/pub/regions?country=BRA&postalCode=";
 
-export default function Modal({open, onClose, onStore}){
+export default function Modal({open, onClose, storeId, onStore}){
 
     //States declaration
     const [cep, setCep] = useState('');
@@ -61,11 +61,11 @@ export default function Modal({open, onClose, onStore}){
         //console.log(id);
 
         //Close the modal
-        onClose();
+        //onClose();
     };
-
+    //console.log("store modal", storeId);
     //return nothing if the modal is close
-    if(!open) return null;
+    if(storeId !="")  return null;
 
     //the modal itself
     return(
@@ -86,7 +86,7 @@ export default function Modal({open, onClose, onStore}){
             </button>
             </form>
             {loading &&
-                <h1 className="text-xl">Loading Stores...</h1>
+                <h1 className="text-xl">Carregando Lojas...</h1>
             }
             
           <div className="flex flex-col overflow-y-auto">

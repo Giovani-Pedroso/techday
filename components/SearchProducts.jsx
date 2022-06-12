@@ -23,6 +23,8 @@ export default function SearchProducts({store, openModal}){
     const [productSearch, setProductSearch] = useState("");
     const [inputValue, setInputValue] = useState("");
 
+    console.log("store in the search", store);
+    
     useEffect(()=>{
         
         const getProducts = async ()=>{
@@ -34,9 +36,9 @@ export default function SearchProducts({store, openModal}){
             catch(err){console.log(err.message);};
 
         };
-        getProducts();
+        if(store)getProducts();
 
-    },[]);
+    },[store]);
 
 
     const handleSubmit = (e) =>{
@@ -85,6 +87,34 @@ export default function SearchProducts({store, openModal}){
             </div>
           </nav>
           {
+
+          
+              productList.map(product=>{
+                  const nameLowerCase = product.productName.toLowerCase();
+                  const re = new RegExp(`${productSearch}`);
+                  
+                  if((productSearch =="") ||(nameLowerCase.search(re)!=-1) ){
+                      return(
+                          <div className="w-[50%] h-[400px] sm:w-[33%] md:w-[20%] md:m-[20px]">
+                        <CardProducts product={product.productName}
+                                      key={product.productName}
+                                      image={product.items[0].images[0].imageUrl}
+                                      price={product.items[0].sellers[0].commertialOffer.Installments[0].Value}
+                        />
+                      </div>
+                      );
+                  }
+                  return(
+                      <div className="hidden">
+                        <CardProducts product={product.productName}
+                                      key={product.productName}
+                                      image={product.items[0].images[0].imageUrl}
+                                      price={product.items[0].sellers[0].commertialOffer.Installments[0].Value}
+                        />
+                      </div>
+                  );
+              })
+          /*
               productList.filter(product=>{
                   const nameLowerCase = product.productName.toLowerCase();
                   const re = new RegExp(`${productSearch}`);
@@ -94,16 +124,16 @@ export default function SearchProducts({store, openModal}){
                   return false;
               }).map(product=>{
                   return(
-                      <CardProducts product={product.productName}
-                                    key={product.productName}
-                                    image={product.items[0].images[0].imageUrl}
-                                    price={product.items[0].sellers[0].commertialOffer.Installments[0].Value}
-                      />
+                      <div className="">
+                        <CardProducts product={product.productName}
+                                      key={product.productName}
+                                      image={product.items[0].images[0].imageUrl}
+                                      price={product.items[0].sellers[0].commertialOffer.Installments[0].Value}
+                        />
+                      </div>
                   );
               })
-          //
-              //image={product.items.images.imageUrl}
-          }
+          */}
 
           
         </div>

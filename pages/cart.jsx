@@ -31,10 +31,16 @@ export default function Cart(){
     };
 
     const saveCart = () =>{
+        const total = getTotal();
+        
+        if(total==0){
+            alert("não há items para salvar");
+            return 0;
+        }
         const storedData = JSON.parse(localStorage.getItem("historic"));
         const date = new Date(Date.now());
         let dataToSave;
-        const newData = {date, items:cartItems, totalPrice:getTotal()};
+        const newData = {date, items:cartItems, totalPrice:total};
    
         if(storedData==null) dataToSave = JSON.stringify([newData]);
         else {
@@ -46,15 +52,23 @@ export default function Cart(){
 
         
         alert("a list foi salva");
+        return 0;
     };
 
     const getMessage = () =>{
+        
+        const total = getTotal();
+        if(total==0){
+            alert("nao há items para copiar");
+            return 0;
+        }
         let message ="";
         cartItems.map(item=> message+=`${item.productName} X ${item.quantity}\n`);
-        message +=`\nTotal: R$ ${getTotal()}`;
+        message +=`\nTotal: R$ ${total}`;
         console.log(message);
         navigator.clipboard.writeText(message);
         alert("Lista copiada para a area de transferencia");
+        return 0;
     };
     
     //console.log("itesn do carrinho", cartItems);
@@ -64,27 +78,27 @@ export default function Cart(){
 
 
           <Navbar isCart={true}/>
-          {
+          <div className="h-full">
+            {
               
-              cartItems.map(item=>{
-                  if(item.quantity){
-                      //console.log(messageTpm);
-                  return(
-                      <CardProductsCart image={item.image}
-                                        key={item.productName}
-                                        productName={item.productName}
-                                        quantity={item.quantity}
-                                        price={item.price}
-                        
-                      />
-                  );
-                  }
-                  return null;
-              })
-          }
-
+                cartItems.map(item=>{
+                    if(item.quantity){
+                        //console.log(messageTpm);
+                        return(
+                            <CardProductsCart image={item.image}
+                                              key={item.productName}
+                                              productName={item.productName}
+                                              quantity={item.quantity}
+                                              price={item.price}
+                            />
+                        );
+                    }
+                    return null;
+                })
+            }
+          </div>
           
-          <footer className="flex flex-col w-full sticky bottom-0 bg-blue-700 text-white p-[6px]">
+          <footer className="flex flex-col w-[100vw] fixed inset-x-0 bottom-0 bg-blue-700 text-white p-[6px]">
             <div className="flex flex-rol justify-between">
               <p>
                 Total: 
