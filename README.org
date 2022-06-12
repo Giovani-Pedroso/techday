@@ -1,11 +1,5 @@
 * Sumario/Sumary
 
-+ [[PT-BR]]
-  + [[Index]]
-  + 
-  + 
-+ [[ENG]]
-  + 
 
 * PT-BR
 
@@ -55,6 +49,5 @@ O website possui foi construido usando 3 paginas
 
 
 
-* ENG 
 
 
