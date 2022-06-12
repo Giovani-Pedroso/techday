@@ -78,7 +78,7 @@ export default function Cart(){
 
 
           <Navbar isCart={true}/>
-          <div className="h-full">
+          <div className="h-full mb-[108px]">
             {
               
                 cartItems.map(item=>{
