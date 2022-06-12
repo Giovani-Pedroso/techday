@@ -29,9 +29,13 @@ export const CartProvider = ({children}) =>{
         
         setCarItems(shortCart);
     };
+
+    const handleItems = (items)=>{
+        setCarItems(items);
+    };
     
     return(
-        <CartContext.Provider value={{test, cartItems, handleItem}}>
+        <CartContext.Provider value={{test, handleItems, cartItems, handleItem}}>
           {children}
         </CartContext.Provider>
     );

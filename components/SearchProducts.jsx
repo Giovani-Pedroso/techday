@@ -1,6 +1,8 @@
 import {useEffect, useState} from 'react';
+
 import Link from 'next/link';
 
+//icons
 import {AiOutlineSearch,
         AiOutlineClose,
         AiOutlineShoppingCart,
@@ -10,18 +12,19 @@ import {AiOutlineSearch,
 import CardProducts from './CardProducts.jsx';
 import Logo from './Logo.jsx';
 
-
 //api that will return a list on products on a store
-//put the store id in the end on the string, this id is given be the api in the ModalStore component
+//put the store id in the end on the api, this id is given be the api in the ModalStore component
 const apiGetProduct = "https://mercado.carrefour.com.br/api/catalog_system/pub/products/search?fq=";
 
 export default function SearchProducts({store, openModal}){
 
+    //states creation
     const [productList, setProductsList] = useState([]);
     const [productSearch, setProductSearch] = useState("");
     const [inputValue, setInputValue] = useState("");
-    
+
     useEffect(()=>{
+        
         const getProducts = async ()=>{
             try{
                 const product = await fetch(`${apiGetProduct}${store}`);
@@ -40,8 +43,6 @@ export default function SearchProducts({store, openModal}){
         setProductSearch(inputValue.toLowerCase());
         e.preventDefault();
     };
-
-    
     
     return(
         <div className="flex flex-wrap w-[100%] justify-center ">
@@ -49,7 +50,7 @@ export default function SearchProducts({store, openModal}){
             
             <div className="flex w-full justify-between  mt-[0px] pr-3">
               <div className="ml-[20px]">
-                <Link href="./cart" >
+                <Link href="./historico" >
                   <a className="text-3xl ">                  
                     <AiOutlineClockCircle/>
                   </a>

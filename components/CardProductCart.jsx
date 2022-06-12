@@ -31,9 +31,10 @@ export default function CardProductsCart({image, productName, price, quantity}){
           </div>
           <div>
             <div className="flex flex-rol px-4 py-2 items-center justify-between">
-              <div>
-                R$ {item.price.toFixed(2)}
+              <div className="">
+                  R$ {item.price.toFixed(2)}
               </div>
+        
               <InputQuantity                         
                              item={item}
                              onQuantity={handleItem}

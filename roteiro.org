@@ -1,0 +1,31 @@
+* Introudução
+
+Compras de mercado um momento de tensão no bolso para muitos de nos brasileiros algumas vezes principalmente quando você essa guardando as compras e nota que esqueceu de comprar a farinha do bolo de aniversario do seu irmão, falo por experiencia propria. Para eliminar essas complicações eu criei a aplicação web Carrefour checklist, uma ferramenta que premite a criação de listas de compras com preços atualizados, salvar essas listas para momentos futuros assim como compartilhá-la.
+
+* Parte tecnica
+
+Para a criação dessa aplicação ultilizei principalmente 2 frameworks.
+
+** nextJs
+
+O primeiro foi o nextJs o auto intitulado framework react para produção, ele foi selecionado por possuir todos os recursos do React com o diferencial de construir nativamente paginas optimizadas para SEO o que faz o site ser melhor rankiado pelos mecanismos de busca como Google, Bing e DuckDuckGo, aqui temos uma comparação entre os codigos gerados pelos frameworkes {mostra o slide} como pode ver o codigo do react possui poucas linhas diferentemento do site feito com o next essa diferença faz com que sites usando react sejam mais dificies de serem analizados pelos mecanismos de busca.
+
+** tailwind
+
+Para realizar a estilização do site ultilizei o frameworkTailind CSS um framework similar ao Boostrap porem focado em ultilidades ao inveis de componentes tronando-o muito mais flexivel.
+
+* Tour pelo aplicativo
+
+** index ou pagina inicial
+
+Aqui esta o website como poder ele é capaz de ajustar para se adequar ao seu smartphone {mostra a responsividade do site}. Ao entrar o usuario é recebido com uma menssagem requisitando seu CEP isso serve para chamar uma API retornara uma lista das lojas mais proximas, atualmente essa api possui algumas limitaçoes como pode ver o tempo de resposta é demasiado longo e o nome de retorno da lista é um pouco abstrato. Apos a seleção é chamada outra api que retornara uma lista lista de produtos disponivel na loja selecionada. Como podem ver aqui temos a seleção produtos outra limitação da api é que é apenas retornado 10 produtos aqui podemos seleceonar o produto que queremos adicionar ao carrilho assim como sua quantidade tambem é possivel realizar uma busca pro um produto especifico.
+
+** Carrinho
+
+Terminada a seleção dos produtos podemos nos direcionar ao carrinho, aqui temos os produtos que selecionamos podemos editar suas quantidades, na parte de baixo da pagina vemos que o valor total ja é calculado, tambem temos dois botões um copia a lista de compras para a area de transferencia do celular ou computador podemdo envia-la pelo whats app por exemplo, o segundo salva a lista para futura consulta, para acessar o historico de compras basta clicar no relogio na parte de cima do site.
+
+** Historico
+
+Essa é a ultima pagina da aplicação aqui temos algumas listas de compras que salvei anteriormente, todos os dados são salvados localmente no navegator do usuario , nessa pagina podemos ver quando a lista foi feita assim como a quantidade de produtos na lateral direita temos dois botoes um para excluir a lista outro cara sermos redirecionados para a pagina do carinho
+ 
+* Tour pelo codigo 
