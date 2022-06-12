@@ -27,7 +27,7 @@ export default function Modal({open, onClose, storeId, onStore}){
         const getProducts = async () =>{
             try{
                 const stores = await fetch(`${apiGetStores}${cep}`);
-                //console.log(stores);
+                console.log(stores);
                 const json = await stores.json();
                 //console.log(json);
                 setStoreList(json[0].sellers);
