@@ -4,7 +4,7 @@ import {useState, useContext} from 'react';
 import {CartContext} from '../context/ContextCarrinho/index.js';
 
 
-import Aviso from './Aviso.jsx';
+//import Aviso from './Aviso.jsx';
 
 export default function CardProducts({price, product, image}){
 
