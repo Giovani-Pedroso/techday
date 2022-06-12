@@ -36,7 +36,8 @@ export default function Modal({open, onClose, storeId, onStore}){
                 setLoading(false);
             }
             catch(err){
-                //An error happened when searching for a CEP - in portuguese 
+                //An error happened when searching for a CEP - in portuguese
+                console.log(err);
                 alert(`ocoreu um erro ao requisitar o cep`);
             };
         };
