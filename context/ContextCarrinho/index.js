@@ -1,13 +1,23 @@
-import {useState, createContext} from 'react';
+import {useState, useEffect, createContext} from 'react';
 
+//import {app} from '../../firebase';//the path of the config file
+import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 export const CartContext = createContext({});
 
 export const CartProvider = ({children}) =>{
     const test = "messsagem de teste";
     const [cartItems, setCarItems] = useState([]);
     const [idStore, setIdStore] = useState("");
+    const [cartId, setCartId] = useState("");
+    const [email, setEmail] = useState("");
     
     const test2 = {test: "dois"};
+
+    //----------- Fire base configs 
+   // const gooleProvider = new GoogleAuthProvider();
+
+
+    
     
     const handleItem =(newItem)=>{
         const newCart = cartItems.filter(item=>{
@@ -16,7 +26,7 @@ export const CartProvider = ({children}) =>{
                 console.log("filtor retornando valor verdadeiro");
                 return true;};
             
-            console.log("filtor retornando valor falso");
+            //console.log("filtor retornando valor falso");
             return false;
         });
         newCart.push(newItem);
@@ -36,7 +46,17 @@ export const CartProvider = ({children}) =>{
     };
     
     return(
-        <CartContext.Provider value={{test, handleItems, cartItems,idStore, setIdStore, handleItem}}>
+        <CartContext.Provider value={{
+            test,
+            cartId,
+            setCartId,
+            email,
+            setEmail,
+            handleItems,
+            cartItems,
+            idStore,
+            setIdStore,
+            handleItem}}>
           {children}
         </CartContext.Provider>
     );

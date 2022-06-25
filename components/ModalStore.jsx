@@ -22,6 +22,29 @@ export default function Modal({storeId, onStore}){
     const [storeList, setStoreList] = useState([]);
     const [search, setSearch] = useState(0);
 
+
+
+    //This section control the language of the component
+    const defaultLanguage = {
+        input:"ZIP code only numbers ",
+        header:"Find a store nearby",
+    };
+
+    const [languageSite, setLanguageSite] = useState(defaultLanguage);
+
+    
+    useEffect(()=>{
+
+        const navLanguage = navigator.language;
+        if(navLanguage == "pt-BR" || navLanguage == "pt-PT"){
+            setLanguageSite({
+                input:"CEP apenas numeros",
+                header:"Encontre uma loja nas próximidades",
+            });
+        }
+        
+    },[]);
+    
     //Estado que controla a mensagem de carregamento
     //------------------------------------------
     //This state control the Loading message
@@ -85,13 +108,26 @@ export default function Modal({storeId, onStore}){
     const handleStore = (id)=>{
         onStore(id);
     };
+
+    
+    const getUserName = () =>{
+        try{
+            return auth.currentUser.displayName;
+        }
+
+        catch(err){
+            return "------";
+        }
+    };
+    
+    
     
     //Se o storeId(variavel do contexto) não for uma string
     //o modal e fechado
     //------------------------------------
     //if the storeId(variable of the contex) is not empty
     //the modal is closed
-    if(storeId !="")  return null;
+    if(storeId !="" || getUserName == "------" )  return null;
 
     //O modal
     //the modal itself
@@ -101,7 +137,7 @@ export default function Modal({storeId, onStore}){
           
           <div className="flex flex-col rounded-xl max-h-[60%] w-[80%] bg-white shadow-lg p-4">
             <h1 className="text-[#da251d] text-2xl text-center mb-6">
-                Encontre uma loja nas proximidades
+              {languageSite.header}
             </h1>
 
             {/*Barra de pesquisa*/}
@@ -112,7 +148,7 @@ export default function Modal({storeId, onStore}){
               <input value={cep}
                      type="number"
                      onChange={(e)=> setCep(e.target.value)} className="text-black w-full focus:outline-none"
-                     placeholder="CEP apenas numeros"/>
+                     placeholder={languageSite.input}/>
               <button>
                 <span className="text-2xl"><AiOutlineSearch/></span>
             </button>

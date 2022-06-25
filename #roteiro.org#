@@ -1,0 +1,72 @@
+#+title:Roteiro
+
+A apresentação é dividida em 3 partes
+primeira: introdução do projeto 
+segunda: que ele é 
+terceira: porque eu o criei
+
+
+* 1° Ato - Introdução
+
+Boa tarde a todos, agradeço a oportunidade de apresentar o meu projeto Venho aqui apresentar a Aplicação Carrefour Checklist, ela foi desenvolvida com o objetivo de criar listas de compras com preços atualizados trazendo a opção de salvá-las para consultas posteriores.
+Como os senhores podem notar realizei algumas alterações do projeto original.A primeira foi a implementação de um sistema de login, a segunda foi os dados armazenados no dispositivo local serem migrados para uma base de dados na nuvem, e por último transformei  a aplicação em bilíngue (português/inglês) possibilitando a mudança de idioma conforme o idioma apresentado no navegador.   
+
+* 2° Ato - Tech stack
+
+A tech stack que utilizei para a construção do projeto consiste em 3 componentes.
+
+** NextJs
+
+O primeiro deles é o NextJs que é um framework que une o forntend com o backend, ele é o esqueleto do site, eu o escolhi por possuir nativamente uma otimização para SEO o que faz com que o site seja melhor rankeado em buscadores como Google, Bing e DuckDuckGo.
+
+** Tailwind Css
+
+Para a estilização do site optei pela biblioteca de estilos Tailwind que por ser uma biblioteca focada em utilidades torna-a muito mais flexível que sua concorrente Bootstrap.
+
+** Firebase
+
+Agora o diferencial dessa versão o Firebase. O firebase é um backend-as-a-service que torna a implementação de funções como autenticação e armazenamento de dados mais  rápidas e extremamente escaláveis, adicionei esse componente a minha stack pois ele permite fazer uma análise dos hábitos de compras dos  usuários de forma personalizada, possibilitando a  criação de anúncios direcionados e promoções personalizadas algo que a Target realiza nos Estados Unidos e tem dado resultados bem positivos. 
+
+Ate aqui 1:23 minutos
+
+* 3° Ato - Demonstração
+
+Agora vamos ao funcionamento do site:  ao entrar o usuário vai encontrar um pop-up solicitando o seu cadastro.  Ao fazer o login com uma conta de email  válida, ou em sua conta Google, outra mensagem vai aparecer solicitando ao usuário inserir o CEP de sua localidade com essa informação o site vai apresentar uma lista com as lojas mais próximas, após a loja ser selecionada o site vai apresentar  os produtos já armazenados, nessa página será possível selecionar os produtos que desejamos assim como sua quantidade, também é possível realizar buscas para um produto especifico, na página do carrinho de compras podemos editar os produtos que escolhemos e salvar a lista na base de dados ou copiá-las para a área de transferência, o histórico das listas feitas podem ser editadas ou excluídas.
+
+
+
+
+* ----------------------------------------Minha---------------------------------------------
+
+A apresentação sera dividida em 3 atos o primeiro a introdução do projeto oque ele é e porque eu fiz ele, segun
+* 1° Ato - Introdução
+
+Boa tarde a todos venho aqui apresentar a aplicação Carrefour checklist, ela foi construída com o objetivo de criar listas de compras com preços atualizados assim como salva-las para consultas futuras,
+---Motivo
+Como os senhores iram reparam realizei algumas alterações. a primeira foi a implementação de um sistema de login, a segunda foi os dados armazenados localmente para uma base de dados na nuvem, e por ultimo fiz com que o site fosse bilíngue mudando o idioma conforme o idioma do navegador  
+* 2° Ato - Tech stack
+
+A tech stack que utilizei para a construção do projeto consiste em 3 componentes.
+
+** NextJs
+
+O primeiro deles é o NextJs que é um framework que une o forntend com o backend, ele é o esqueleto do site, eu o escolhi por possuir nativamente uma otimização para SEO oque faz os site ser melhor rankeado em sites como google, bing e DuckDuckGo.
+
+** Tailwind Css
+
+Para a estilização do site escolhi  a biblioteca de estilos tailwind que por ser uma biblioteca focada em utilidades trona-a muito mais flexível que sua concorrente Bootstrap.
+
+** Firebase
+
+Agora o diferencial dessa versão, Firebase; firebase é um backend-as-a-service que torna a implementação de funções como autenticação e armazenamento de dados, rápidas e extremamente escaláveis, deci adicionar esse componente a minha stack pois ele permitira fazer uma analise dos hábitos de compras de cada usuário  para criação de anúncios direcionados e promoções personalizadas algo que a Target realiza nos Estados Unidos.
+
+Ate aqui 1:23 minutos
+
+* 3° Ato - Demostração
+
+Agora vamos ao funcionamento do site ao entrar o usuário encontrara um pop-up pedindo para se cadastra ao fazer login com uma conta existente, é possivel tambem realizar o cadastro com uma conta google, apos isso outra mensagem aparecerá pedindo para o usuario colocar o cep de sua residencia com essa informação o site ira retornar uma lista com as lojas mais próximas, apos a loja ser selecionada o site ira retornar os produtos que essa loja possui nessa pagina podemos selecionar os produtos que desejamos assim como sua quantidade, também é possível realizar buscas para um produto especifico, na pagina de carrinho podemos editar os produtos que escolhemos, e salvar a lista na base de dados ou copia-la para a área de transferência, aqui temos o historico das listas feitas podemos deleta-las ou edita-las
+
+
+
+senha email:
+ahsdfkgyuiqrwehdjkhfagdasf

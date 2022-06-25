@@ -4,6 +4,10 @@ import {useEffect, useState} from 'react';
 //------------------------------------------
 //a version of the "a tag" optimized for nextJs
 import Link from 'next/link';
+import {BiExit} from 'react-icons/bi';
+import {getAuth} from 'firebase/auth';
+import {collection, addDoc, getDocs} from 'firebase/firestore';
+import {database} from '../firebase.js';
 
 //icons
 import {AiOutlineSearch,
@@ -23,18 +27,51 @@ import Logo from './Logo.jsx';
 //put the store id in the end on the api, this id is given be the api in the ModalStore component
 const apiGetProduct = "https://mercado.carrefour.com.br/api/catalog_system/pub/products/search?fq=";
 
-export default function SearchProducts({store, openModal}){
+export default function SearchProducts({store, openModal, openLogin}){
 
+    const auth = getAuth();
+    
+    
     //states creation
     const [productList, setProductsList] = useState([]);
     const [productSearch, setProductSearch] = useState("");
     const [inputValue, setInputValue] = useState("");
+
+
+    //This section control the language of the component
+    const defaultLanguage = {
+        loadMessage:"Loading Products",
+        changeStore:"Change store",
+        user:"User",
+        products:"Product ",
+        store:"Store",
+    };
+
+    const [languageSite, setLanguageSite] = useState(defaultLanguage);
+
+    useEffect(()=>{
+
+        const navLanguage = navigator.language;
+        if(navLanguage == "pt-BR" || navLanguage == "pt-PT"){
+            setLanguageSite({
+
+                loadMessage:"Carregando produtos",
+                changeStore:"Mudar Loja",
+                user:"Usuario",
+                products:"Produto ",
+                store:"Loja",
+            });
+        }
+        
+    },[]);
+
+
     
     //Esse estado controla a mensagem de carregamento
     //----------------------------
     //This state control the Loading message
     const [loading, setLoading] = useState(true);
-    
+
     useEffect(()=>{
 
         //função que vai chamar a api e converter seu retorno em um objeto json
@@ -51,10 +88,16 @@ export default function SearchProducts({store, openModal}){
                 //hide the loading message
                 setLoading(false);
             }
-            catch(err){console.log(err.message);};
-
+            catch(err){
+                console.log(err.message);
+            };
         };
 
+        //console.log("nav language: ", navigator.language );
+
+        
+
+        
 
         //Evita chamar a api com um id vazio
         //-----------------------------------
@@ -132,10 +175,24 @@ export default function SearchProducts({store, openModal}){
                         />
                       </div>
                   );
-              })
+      });
 
 
     };
+    //console.log("auth é igua", auth);
+
+    const getUserName = () =>{
+       // console.log(auth.currentUser);
+        try{
+            return auth.currentUser.email;
+        }
+
+        catch(err){
+            return "------";
+        }
+    };
+
+
     
     return(
         <div className="flex flex-wrap w-[100%] justify-center ">
@@ -167,7 +224,7 @@ export default function SearchProducts({store, openModal}){
               <input value={inputValue}
                      onChange={(e)=> setInputValue(e.target.value)}
                      className="text-black w-[90%] m-auto focus:outline-none"
-                     placeholder="Produto"/>
+                     placeholder={languageSite.products}/>
               <button>
                 <span className="text-2xl text-blue-700"><AiOutlineSearch/></span>
             </button>
@@ -180,17 +237,31 @@ export default function SearchProducts({store, openModal}){
             This button will clear the store Id, this action
             will open the modal for search for a new store
             */}
-            <div className="mb-4">
-              Loja {store} <button
-                             className="text-red-400"
-                             onClick={openModal}> Mude de loja</button>
+            <div className="mb-4 flex flex-col justify-between w-[80%]">
+              <div className="mb-2 flex items-center" >
+                <b>{languageSite.user}:</b>
+                {" "}
+                {getUserName()}{" "}
+                <button
+                  className="text-red-400"
+                  onClick={()=>{
+                      openLogin();}}
+                >
+                  <BiExit className="ml-[4px] text-2xl"/>
+                </button>
+              </div>
+              <div>
+                <b>{languageSite.store}:</b> {store} <button
+                               className="text-red-400"
+                                       onClick={openModal}> {languageSite.changeStore}</button>
+              </div>
             </div>
           </nav>
 
 
           {/*The message of loading*/}
           {(loading && (store!="")) &&
-                <h1 className="text-xl">Carregando Produtos...</h1>
+           <h1 className="text-xl">{languageSite.loadMessage}...</h1>
           }
 
           {/*return the products*/}

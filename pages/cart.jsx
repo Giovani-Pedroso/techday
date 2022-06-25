@@ -1,8 +1,14 @@
-import {useContext} from 'react';
+import {useContext, useEffect, useState} from 'react';
+
+import {database} from '../firebase.js';
+import {getAuth} from 'firebase/auth';
+import {collection, addDoc, updateDoc, doc} from 'firebase/firestore';
 
 import {
-        AiOutlineSave,
-        AiOutlineCopy,
+    AiOutlineSave,
+    AiOutlineCopy,
+    AiOutlineReload
+    
     } from 'react-icons/ai';
 
 import {CartContext} from '../context/ContextCarrinho/index.js';
@@ -10,10 +16,58 @@ import {CartContext} from '../context/ContextCarrinho/index.js';
 import Navbar from '../components/Navbar1.jsx';
 import CardProductsCart from '../components/CardProductCart.jsx';
 
+
 export default function Cart(){
+    
+    const {cartItems, cartId } = useContext(CartContext);
 
-    const {cartItems } = useContext(CartContext);
+    console.log("car id",cartId);
+    const auth = getAuth();
 
+    
+    //This section control the language of the component
+    const defaultLanguage = {
+        saveList:"Save list",
+        modifyList:"Modify list",
+        copyList:"Copy list",
+        money:"$",
+    };
+
+    const [languageSite, setLanguageSite] = useState(defaultLanguage);
+
+    useEffect(()=>{
+
+        const navLanguage = navigator.language;
+        if(navLanguage == "pt-BR" || navLanguage == "pt-PT"){
+            setLanguageSite({
+                saveList:"Salvar lista",
+                modifyList:"Modificar lista",
+                copyList:"Copiar lista",
+                money:"R$",
+            });
+        }
+        
+    },[]);
+
+    const addListToDataBase= (list)=>{
+        //console.log(list);
+        //console.log("auth", auth.currentUser.uid);
+        //console.log("add list to the data base");
+        console.log(addDoc);
+        const collectionUserRef = collection(database, auth.currentUser.uid);
+        addDoc( collectionUserRef, list)
+            .then(res=>alert("Lista foi salva"))
+            .catch(err=> alert(err.mesage));
+    };
+
+    const UpdateListToDataBase = (list) =>{
+        const docToUpdate = doc(database, auth.currentUser.uid, cartId);
+        updateDoc(docToUpdate, list);
+        console.log("user uid", auth.currentUser.uid);
+        console.log("list", list);
+        alert("Lista foi Modificada");
+    };
+    
     //função que retorna a soma de todos os preços
     //---------------------------------------
     //function that return the sum of all prices
@@ -26,6 +80,10 @@ export default function Cart(){
         return total.toFixed(2);
     };
 
+    
+
+  
+    
     const saveCart = () =>{
         const total = getTotal();
         
@@ -53,7 +111,10 @@ export default function Cart(){
         //--------------------
         //join the 2 datas
         const newData = {date, items:cartItems, totalPrice:total};
-   
+
+        if(cartId) UpdateListToDataBase(newData);
+        else addListToDataBase(newData);
+        
         //converte os datos para serem salvos
         //---------------------------------
         //convert the data to but save
@@ -69,11 +130,11 @@ export default function Cart(){
         localStorage.setItem("historic", dataToSave);
 
         //the list was saved - pr-br
-        alert("a list foi salva");
+        //alert("a list foi salva");
         return 0;
     };
 
-    const getMessage = () =>{
+    const getMessage = async () =>{
         
         const total = getTotal();
         if(total==0){
@@ -96,7 +157,20 @@ export default function Cart(){
         navigator.clipboard.writeText(message);
 
         //the list was cpoy to the clipboard - pt-br
-        alert("Lista copiada para a area de transferencia");
+        //alert("Lista copiada para a area de transferencia");
+
+        console.log("auth: ", auth);
+
+        console.log("database: ",database);
+        
+        const collectionUse = collection(database, "test");
+
+
+        addDoc( collectionUse, {
+            name: "nam",
+            nickName:"nickName"
+        }).then(res=>alert("data added")).catch(err=> err.mesage);
+
         return 0;
     };
     
@@ -135,19 +209,28 @@ export default function Cart(){
                 Total: 
               </p>
               <div>
-                R$ {getTotal()}
+                {languageSite.money} {getTotal()}
               </div>
             </div>
-            
+        
             <div className="flex flex-rol mt-[10px] ">
               <button className="flex justify-center items-center w-[50%] h-[40px] bg-red-500 active:bg-red-300" onClick={()=>saveCart()}>
-                <AiOutlineSave className="inline text-xl mr-[10px]" />
-                <span>Salvar a lista</span>
-              </button>
+                {cartId ? 
+                <div>
+                  <AiOutlineReload className="inline text-xl mr-[10px]" />
+                  <span>{languageSite.modifyList}</span>
+                </div>
+                 :
+                <div>
+                  <AiOutlineSave className="inline text-xl mr-[10px]" />
+                  <span>{languageSite.saveList}</span>
+                </div>
+                }
+            </button>
               <button onClick={()=>getMessage()} className="flex justify-center items-center w-[50%] h-[40px] bg-green-700 active:bg-green-500">
 
                 <AiOutlineCopy className="inline align-middle inline text-xl mr-[10px] "/>
-                <span className="align-top ">Copiar lista</span>
+                <span className="align-top ">{languageSite.copyList}</span>
 
               </button>
             </div>

@@ -1,4 +1,4 @@
-import {useState, useContext} from 'react';
+import {useState, useEffect, useContext} from 'react';
 
 import {CartContext} from '../context/ContextCarrinho/index.js';
 
@@ -47,6 +47,24 @@ const ButtonAddCart = ({on, productName, image, price})=>{
 
     const {handleItem} = useContext(CartContext); 
 
+    //This section control the language of the component
+    const defaultLanguage = {
+        add:"ADD",
+    };
+
+    const [languageSite, setLanguageSite] = useState(defaultLanguage);
+
+    
+    useEffect(()=>{
+
+        const navLanguage = navigator.language;
+        if(navLanguage == "pt-BR" || navLanguage == "pt-PT"){
+            setLanguageSite({
+                add:"Adicionar",
+            });
+        }
+        
+    },[]);
     return(
         <button type="button" onClick={()=>{
           //salva o produto no contexto
@@ -55,7 +73,7 @@ const ButtonAddCart = ({on, productName, image, price})=>{
             handleItem({productName,image, quantity:1 ,price});
             on();
 
-        }} className="bg-blue-700 h-[50px] p-2 text-white">Adicionar</button>
+        }} className="bg-blue-700 h-[50px] p-2 text-white">{languageSite.add}</button>
     );
 };
 
