@@ -3,24 +3,13 @@ import { initializeApp } from "firebase/app";
 
 
 const clientCredentials = {
-
-
-    apiKey: "AIzaSyAqtVyXwYJDKxkYNJEDUzwjB4sVADk--6A",
-    authDomain: "carrefour-techday.firebaseapp.com",
-    projectId: "carrefour-techday",
-    storageBucket: "carrefour-techday.appspot.com",
-    messagingSenderId: "82732177937",
-    appId: "1:82732177937:web:73a2e5e76b928137ff6fb0"
-    /*
     apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-    authDomain:  process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-    projectId:  process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-    storageBucket:  process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-    messagingSenderId:  process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-    appId:  process.env.NEXT_PUBLIC_FIREBASE_API_ID
-    */
+    authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+    projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+    storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+    appId: process.env.NEXT_PUBLIC_FIREBASE_API_ID
 };
-
 
 export const app = initializeApp(clientCredentials);
 export const database = getFirestore(app);

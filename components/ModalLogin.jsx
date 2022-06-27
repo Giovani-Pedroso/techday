@@ -65,7 +65,7 @@ export default function Modal({openLogin,setEmail, email, setOpenLogin }){
         
     },[]);
     
-    const createUser = async () =>{
+    const createUser = async (e) =>{
         if(passwordCreate != passwordCreate2) {
             alert(languageSite.passwordNotEqual);
             return 0;
@@ -77,10 +77,11 @@ export default function Modal({openLogin,setEmail, email, setOpenLogin }){
                 //setOpenLogin();
             })
             .catch((error) =>  alert(error.message));
+        e.preventDefault();
         return 0;
     };
 
-    const accessUser = ()=>{      
+    const accessUser = (e)=>{      
         signInWithEmailAndPassword(auth, emailAccess, passwordAccess)
             .then((response) => {
                 console.log(response.user);
@@ -89,6 +90,7 @@ export default function Modal({openLogin,setEmail, email, setOpenLogin }){
                 //setOpenLogin();
             })
             .catch((error) =>  alert(error.message));
+        e.preventDefault();
         //console.log(getAuth());
     };
     
@@ -127,10 +129,12 @@ export default function Modal({openLogin,setEmail, email, setOpenLogin }){
 
             {/*Barra de pesquisa*/}
             {/*The search bar*/}
-            <form
+            <div
               onSubmit={handleSubmit}
               className="p-2 flex flex-col justify-around items-center">
-              <div className="w-full">
+              <form
+                onSubmit={createUser}
+                className="w-full">
                 
                 <input className="p-2 w-full border-2 border-blue-700"
                        type="text"
@@ -150,21 +154,23 @@ export default function Modal({openLogin,setEmail, email, setOpenLogin }){
                        value={passwordCreate2}
                        placeholder={languageSite.repeatPassword}/>
                 
-                <button className="bg-blue-700 w-full mb-2 p-2 text-white active:bg-blue-400"type="button" onClick={createUser}>
+                <button className="bg-blue-700 w-full mb-2 p-2 text-white active:bg-blue-400">
                   {languageSite.login}
                 </button>
-              </div>
 
-              <button type="button" className="flex flex row justify-center items-center p-2  border-2  w-full mb-[10px] shadow-lg border-blue-700"
+              <button className="flex flex row justify-center items-center p-2  border-2  w-full mb-[10px] shadow-lg border-blue-700"
                       onClick={()=>{loginWithGoogle();}}>
                <FcGoogle className="mr-[10px]"/> Google
               </button>
+              </form>
               
               <h1 className="text-[#da251d] text-2xl text-center mb-3">
                 {languageSite.signIn}
               </h1>
 
-
+              <form className="w-full"
+                    onSubmit={accessUser}
+              >
                 <input className="p-2 w-full border-2 border-blue-700"
                        type="text"
                        value={emailAccess}
@@ -177,12 +183,10 @@ export default function Modal({openLogin,setEmail, email, setOpenLogin }){
                        value={passwordAccess}
                        placeholder={languageSite.password}/>
 
-                <button className="bg-blue-700 w-full mb-2 p-2 text-white active:bg-blue-400" type="button"
-                        onClick={accessUser}
-                >
+                <button className="bg-blue-700 w-full mb-2 p-2 text-white active:bg-blue-400" >
                   {languageSite.login}
                 </button>
-
+              </form>
               
               <button className="flex flex row justify-center items-center p-2  border-2  w-full mb-[10px] shadow-lg border-blue-700"
                       type="button"
@@ -190,7 +194,7 @@ export default function Modal({openLogin,setEmail, email, setOpenLogin }){
                <FcGoogle className="mr-[10px]"/> Google
               </button>
               <hr/>
-            </form>
+            </div>
 
             {/*Mensagem de carregamento*/}
             {/*The message of loading*/}
