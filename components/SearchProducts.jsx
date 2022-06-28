@@ -79,6 +79,7 @@ export default function SearchProducts({store, openModal, openLogin}){
         //function that will call the api and convert in a json object
         const getProducts = async ()=>{
             try{
+                setLoading(true);
                 const product = await fetch(`${apiGetProduct}${store}`);
                 const jsonProduct = await product.json();
                 setProductsList(jsonProduct);
@@ -261,11 +262,11 @@ export default function SearchProducts({store, openModal, openLogin}){
 
           {/*The message of loading*/}
           {(loading && (store!="")) &&
-           <h1 className="text-xl">{languageSite.loadMessage}...</h1>
+           <h1 className="text-xl text-center w-full m-[60px]">{languageSite.loadMessage}...</h1>
           }
 
           {/*return the products*/}
-          {getProducts()}
+          {!loading && getProducts()}
 
           
         </div>
